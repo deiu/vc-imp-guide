@@ -88,7 +88,11 @@ pre .property {
 }
 pre .comment {
   font-weight: bold;
-  color: Gray;
+  color: SteelBlue;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .supported {
   background-color: #93c47d;
@@ -121,22 +125,21 @@ or send them to
       <em>This section is non-normative.</em>
 
       <p>
-        Welcome dear implementer of Verifiable Credentials! We understand that reading 
-        and nagivating technical specifications can be confusing at times. For this reason, 
-        we would like to offer you a few resources to get you started.
+This guide provides some examples and resources for implementing
+protocols which make use of <a>verifiable credentials</a>, beyond those available in the core specification.
       </p>
       <p>
-        First, you should probably become familiarized with the official 
-        <a href="https://www.w3.org/TR/verifiable-claims-use-cases/">Use Cases document</a>, 
-        which offers a concise but limited collection of use cases readers should review before
-        undestanding how Verifiable Claims can best help them.
+It may be useful to first familiarize yourself with the official
+<a href="https://www.w3.org/TR/verifiable-claims-use-cases/">Use Cases document</a>,
+which offers a concise collection of examples of <a>Verifiable Credentials</a>
+as they may appear in everyday life, and how they may be used.
       </p>
       <p>
-        The <a href="https://w3c.github.io/vc-data-model/">data model specification</a> is the 
-        most important result of two years of hard work done by the Verifiable Claims Working Group.
-        However, the data model itself is not sufficient if you plan to use Verifiable Claims today.
-        Additional works needs to be done on identifiers as well as on proofs, as you will be able to
-        find out in the sections below. 
+The <a href="https://www.w3.org/TR/vc-data-model/">data model specification</a>
+contains the technical details about <a>verifiable credentials</a>. However, the
+data model specification does not specify any <em>protocols</em> for using
+<a>verifiable credentials</a>, nor any <em>proof formats</em> or additional
+<em>identifiers</em> upon which such protocols may depend.
       </p>
     </section>
 
@@ -144,478 +147,34 @@ or send them to
       <h2>Identifiers</h2>
       <em>This section is non-normative.</em>
       <p>
-          When expressing statements about a specific entity, such as a person, product, or organization, 
-          it is often useful to use some kind of identifier so that others can express statements about 
-          the same thing. You may have noticed that the VC Data Model specification contains numerous 
-          examples where the choice of identifier for the subject of the credential (the thing the claims 
-          are about) has been a <a href="https://w3c-ccg.github.io/did-primer/">decentralized identifier</a>, 
-          also known as a DID. An example of a DID is <code>did:example:123456abcdef</code>.
+When expressing statements about a specific entity, such as a person, product,
+or organization, it is often useful to have an identifier for it so that others
+can express statements about the same thing. The <a>verifiable credentials</a>
+<a href="https://www.w3.org/TR/vc-data-model//">data model specification</a>
+contains numerous examples where the identifier is a
+<a href="https://w3c-ccg.github.io/did-primer/">decentralized identifier</a>,
+also known as a DID. An example of a DID is <code>did:example:123456abcdef</code>.
+      </p>
+      <p>
+There is currently a proposed charter for a W3C <a href="https://w3c-ccg.github.io/did-wg-charter/">
+Decentralized Identifier Working Group</a>, which will put DIDs on track to
+become a W3C standard.
       </p>
       <p class="note">
-          As of the publication of the VC Data Model specification, DIDs are a new type of identifier that 
-          are not necessary for verifiable credentials to be useful. Specifically, verifiable credentials 
-          do not depend on DIDs and DIDs do not depend on verifiable credentials. However, it is expected 
-          that many verifiable credentials will use DIDs and that software libraries implementing the Data Model 
-          specification will probably need to resolve DIDs. DID-based URLs are used for expressing identifiers 
-          associated with subjects, issuers, holders, credential status lists, cryptographic keys, and other 
-          machine-readable information that is associated with a verifiable credential. 
-      </p>
-      
-      <p>
-        There is currently a proposed charter for a new <a href="https://w3c-ccg.github.io/did-wg-charter/">
-        Decentralized Identifier Working Group</a> that has been submitted to the W3C, aiming to officially 
-        put DIDs on the standards track.
-      </p>
-    </section>
-
-    <section>
-      <h2>Proofs</h2>
-      <em>This section is non-normative.</em>
-
-      <p>
-          The VC Data Model is designed to be proof format agnostic. At the time of publication, 
-          at least two proof formats are being actively utilized by implementers -- JSON Web Token (JWT)
-          and Linked Data Proofs.
-          The Working Group felt that <a href="https://w3c.github.io/vc-data-model/#proof-formats">documenting</a> 
-          in the spec what these proof formats are and how they are being used would be beneficial to implementers.
-          
-      </p>
-      <p>
-        The table below compares three syntax and proof format ecosystems; JSON+JWTs, JSON-LD+JWTs, 
-        and JSON-LD+LD-Proofs. Implementers should be aware that Zero-Knowledge Proofs are currently 
-        proposed as a sub-type of LD-Proofs and thus fall into the final column below.
+As of the publication of the <a>verifiable credentials</a>
+<a href="https://www.w3.org/TR/vc-data-model/">data model specification</a>,
+DIDs are not necessary for <a>verifiable credentials</a> to be useful.
+Specifically, <a>verifiable credentials</a> do not depend on <a>DIDs</a> and
+<a>DIDs</a> do not depend on <a>verifiable credentials</a>. However, it is
+expected that many <a>verifiable credentials</a> will use <a>DIDs</a> and that
+software libraries implementing the
+<a href="https://www.w3.org/TR/vc-data-model/">data model specification</a>
+will benefit from knowing how to resolve <a>DIDs</a>. <a>DID</a>-based URLs may
+be used to express identifiers associated with <a>subjects</a>, <a>issuers</a>,
+<a>holders</a>, credential status lists, cryptographic keys, and other
+machine-readable information associated with a <a>verifiable credential</a>.
       </p>
 
-      <table class="simple">
-        <thead>
-          <tr>
-            <th style="text-align: center;">Feature</th>
-            <th style="text-align: center;">JSON<br>+<br>JWTs</th>
-            <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
-            <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-              <a href="#pf1">PF1.</a> Support for open world data modelling.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf2">PF2.</a> Universal identifier mechanism for JSON objects via
-  the use of URIs.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf3">PF3.</a> A way to disambiguate properties shared among different
-  JSON documents by mapping them to IRIs via a context.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf4">PF4.</a> A mechanism to refer to data in an external document,
-  where the data may be merged with the local document without a merge conflict
-  in semantics or structure.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf5">PF5.</a> The ability to annotate strings with their language.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf6">PF6.</a> A way to associate arbitrary datatypes, such as dates
-  and times, with arbitrary property values.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf7">PF7.</a> A facility to express one or more directed graphs,
-  such as a social network, in a single document.
-            </td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf8">PF8.</a> Supports signature sets.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf9">PF9.</a> Embeddable in HTML such that search crawlers will
-  index the machine-readable content.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-          <tr>
-            <td>
-  <a href="#pf10">PF10.</a> Data on the wire is easy to debug and serialize to
-  database systems.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf11">PF11.</a> Nesting signed data does not cause data size to
-  double for every embedding.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf12">PF12.</a> Proof format supports Zero-Knowledge Proofs.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf13">PF13.</a> Proof format supports arbitrary proofs such as Proof
-  of Work, Timestamp Proofs, and Proof of Stake.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf14">PF14.</a> Proofs can be expressed unmodified in other data
-  syntaxes such as YAML, N-Quads, and CBOR.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf15">PF15.</a> Signature is not invalidated by changes in whitespace 
-  or in the ordering of property-values.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf16">PF16.</a> Designed to easily support experimental signature
-  systems.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf17">PF17.</a> Supports signature chaining.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf18">PF18.</a> Does not require pre-processing or post-processing.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-
-          <tr>
-            <td>
-  <a href="#pf19">PF19.</a> Canonicalization does not require more than base-64 encoding.
-            </td>
-            <td class="missing">✖</td>
-            <td class="missing">✖</td>
-            <td class="supported">✓</td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <p class="note">
-          Some of the features listed in the table above are debateable since a feature
-          can always be added to a particular syntax or digital proof format. The table
-          is intended to identify native features of each combination such that no
-          additional language design or extension is required to achieve the identified
-          feature. Features that all languages provide, such as the ability to express
-          numbers, have not been included for the purposes of brevity.
-      </p>
-          
-      <dl>
-        <dt id="pf1">
-          PF1: Support for open world data modelling
-                </dt>
-                <dd>
-          An <em>open world data model</em> is one where any entity can make any
-          statement about anything while simultaneously ensuring that the semantics of
-          the statement are unambiguous. This specification is enabled by an open world
-          data model called Linked Data. One defining characteristic of supporting an open
-          world data model is the ability to specify the semantic context in which data
-          is being expressed. JSON-LD provides this mechanism via the
-          <code>@context</code> property. JSON has no such feature.
-                </dd>
-                <dt id="pf2">
-          PF2: Universal identifier mechanism for JSON objects via the use of URIs.
-                </dt>
-                <dd>
-          All entities in a JSON-LD document are identified either via an automatic URI,
-          or via an explicit URI. This enables all entities in a document to be
-          unambiguously referenced. JSON does not have a native URI type nor does it
-          require objects to have one, making it difficult to impossible to unambiguously
-          identify an entity expressed in JSON.
-                </dd>
-                <dt id="pf3">
-          PF3: A way to disambiguate properties shared among different JSON documents by
-          mapping them to IRIs via a context.
-                </dt>
-                <dd>
-          JSON object properties are not mapped to IRIs, which result in ambiguities with
-          respect to the semantic meaning of the property. For example, one JSON document
-          can use "title" (meaning "book title") in a way that is semantically
-          incompatible with another JSON document using "title" (meaning "job title").
-          In contrast, each object property in a JSON-LD document, such as the property 
-          "homepage", is either a keyword, an IRI, or a literal mapped to an IRI via a context. 
-          This feature enables open world systems to identify the semantic meaning of the 
-          property in an unambiguous way, which enables seamless merging of data between 
-          disparate systems.
-          
-                </dd>
-                <dt id="pf4">
-          PF4: A mechanism to refer to data in an external document, whereby the external data may
-          be merged with the local document without a merge conflict in semantics or
-          structure.
-                </dt>
-                <dd>
-          JSON-LD provides a mechanism that enables a data value to use a URL to refer
-          to data outside of the local document. This external data may then be
-          automatically merged with the local document without a merge conflict in
-          semantics or structure. This feature enables a system to apply the
-          "follow your nose" principle to discover a richer set of data that is
-          associated with the local document. While a JSON document can contain pointers
-          to external data, interpreting the pointer is often application specific and
-          usually does not support merging the external data to construct a richer data
-          set.
-                </dd>
-                <dt id="pf5">
-          PF5: The ability to annotate strings with their language.
-                </dt>
-                <dd>
-          JSON-LD enables a developer to specify the language, such as English, French,
-          or Japanese, in which a text string is expressed via the use of language tags.
-          JSON does not provide such a feature.
-                </dd>
-                <dt id="pf6">
-          PF6: A way to associate arbitrary datatypes, such as dates
-          and times, with arbitrary property values.
-                </dt>
-                <dd>
-          JSON-LD enables a developer to specify the data type of a property value,
-          such as Date, unsigned integer, or Temperature by specifying it in the
-          JSON-LD Context. JSON does not provide such a feature.
-                </dd>
-                <dt id="pf7">
-          PF7: A facility to express one or more directed graphs, such as a social
-          network, in a single document.
-                </dt>
-                <dd>
-          JSON-LD's abstract data model supports the expression of information
-          as a directed graph of labeled nodes and edges, which enables an open world
-          data model to be supported. JSON's abstract data model only supports the
-          expression of information as a tree of unlabeled nodes and edges, which
-          restricts the types of relationships and structures that can be natively
-          expressed in the language.
-                </dd>
-                <dt id="pf8">
-          PF8: Supports signature sets.
-                </dt>
-                <dd>
-          A signature set is an unordered set of signatures over a data payload. Use
-          cases, such as cryptographic signatures applied to a legal contract,
-          typically require more than one signature to be associated with the contract
-          in order to legally bind two or more parties under the terms of the contract.
-          LD-Proofs, including LD-Signatures, natively support sets of
-          signatures. JWTs only enable a single signature over a single payload.
-                </dd>
-                <dt id="pf9">
-          PF9: Embeddable in HTML such that search crawlers will index the
-          machine-readable content.
-                </dt>
-                <dd>
-          All major search crawlers natively parse and index information expressed as
-          JSON-LD in HTML pages. LD-Proofs enable the current data format that search
-          engines use to be extended to support digital signatures. JWTs have no mechanism
-          to express data in HTML pages and are currently not indexed by search crawlers.
-                </dd>
-                <dt id="pf10">
-          PF10: Data on the wire is easy to debug and serialize to database systems.
-                </dt>
-                <dd>
-          When developers are debugging software systems, it is beneficial for them to be
-          able to see the data that they are operating on using common debugging tools.
-          Similarly, it is useful to be able to serialize data from the network to a
-          database and then from the database back out to the network using a minimal
-          number of pre- and post-processing steps. LD-Proofs enable developers to use
-          common JSON tooling without having to convert the format into a different
-          format or structure. Payload information in JWTs is base-64 encoded, and requires
-          complicated pre- and post-processing steps to convert the data into JSON data
-          while not destroying the digital signature. Similarly, schema-less databases,
-          which are typically used to index JSON data, cannot index information
-          that is expressed in an opaque base-64 encoded wrapper.
-                </dd>
-                <dt id="pf11">
-          PF11: Nesting signed data does not cause data size to double for every
-          embedding.
-                </dt>
-                <dd>
-          When a JWT is encapsulated by another JWT, the entire payload must be base-64
-          encoded in the initial JWT, and then base-64 encoded again in the encapsulating
-          JWT. This is often necessary when a cryptographic signature is required on a
-          document that contains a cryptographic signature, such as when a Notary
-          signs a document that has been signed by someone else seeking the Notary's
-          services. LD-Proofs use an equally secure canonicalization process that requires 
-          only the cryptographic signature to be base-64 encoded; i.e., LD-Proofs do 
-          not require that the signed portion of a document also be base-64 encoded.
-                </dd>
-                <dt id="pf12">
-          PF12: Proof format supports Zero-Knowledge Proofs.
-                </dt>
-                <dd>
-          The LD-Proof format is capable of specifying the algorithm (including 
-          as-yet-undefined algorithms) used to generate the hash or hashes that are 
-          cryptographically signed. This cryptographic agility enables digital signature
-          systems, such as Zero-Knowledge Proofs, to be layered on top of LD-Proofs 
-          without requiring creation of an entirely new digital signature container format.
-          Because of the way that JWTs are designed, an entirely new digital signature 
-          container format will be required for JWTs to support Zero-Knowledge Proofs.
-                </dd>
-                <dt id="pf13">
-          PF13: Proof format supports arbitrary proofs such as Proof of Work, Timestamp
-          Proofs, and Proof of Stake.
-                </dt>
-                <dd>
-          The LD-Proof format was designed with a broad range of proof types in mind
-          and supports cryptographic proofs beyond simple cryptographic signatures.
-          These proof types are in common use in systems such as decentralized ledgers
-          and provide additional guarantees to <a>verifiable credentials</a>, such as 
-          the ability to prove that a particular claim was made at a particular time or 
-          that a certain amount of energy was expended to generate a particular credential.
-          The JWT format does not support arbitrary proof formats.
-                </dd>
-                <dt id="pf14">
-          PF14: Proofs can be expressed unmodified in other data syntaxes such as XML,
-          YAML, N-Quads, and CBOR.
-                </dt>
-                <dd>
-          The LD-Proof format utilizes a canonicalization algorithm to generate a
-          cryptographic hash that is used as an input to the cryptographic proof
-          algorithm. This enables the bytes generated as the cryptographic proof to be
-          compact and expressible in a variety of other syntaxes such as XML,
-          YAML, N-Quads, and CBOR. JWTs are inextricably tied to the JSON syntax, 
-          because JWT generation requires the use of JSON.
-                </dd>
-                <dt id="pf15">
-          PF15: Signature is not invalidated by changes in whitespace or in the ordering 
-          of property-values.          
-                </dt>
-                <dd>
-          Since LD-Proofs utilize a canonicalization algorithm, changes in
-          whitespace that does not change the meaning of the information being expressed
-          has no effect on the final cryptographic hash over the information. This means
-          that simple changes in whitespace formatting, such as those changes made when
-          writing data to a schema-less database and then retrieving the same information
-          from the same database do not cause the digital signature to fail. JWT payloads
-          use base-64 encoding, which is changed by whitespace formatting though it has 
-          no effect on the information expressed. This makes it challenging to use JWTs to, 
-          for example, express signed data in web pages meant to be indexed by search 
-          engine crawlers.
-                </dd>
-                <dt id="pf16">
-          PF16: Designed to easily support experimental signature systems.
-                </dt>
-                <dd>
-          The JWT format requires entries in a centralized registry through a formal 
-          international standards working group in order to avoid naming collisions, so 
-          it does not easily support experimental extensions. The LD-Proof format is 
-          naturally extensible, through the decentralized publication of cryptographic 
-          suites that are guaranteed to not conflict with other LD-Proof extensions. 
-          This approach enables LD-Proof developers to easily experiment with new
-          cryptographic signature mechanisms that support selective disclosure, 
-          zero-knowledge proofs, post-quantum algorithms, and other innovations.
-                </dd>
-                <dt id="pf17">
-          PF17: Supports signature chaining.
-                </dt>
-                <dd>
-          A signature chain is an ordered set of signatures over a data payload. Use
-          cases, such as cryptographic signatures applied to a notarized document,
-          typically require a signature by the signing party and then an additional one
-          by a notary to be made after the original signing party has made their
-          signature. LD-Proofs, including LD-Signatures, natively support chains of 
-          signatures. JWTs only enable a single signature over a single payload.
-                </dd>
-                <dt id="pf18">
-          PF18: Does not require pre-processing or post-processing.
-                </dt>
-                <dd>
-          In order to encode a <a>verifiable credential</a> or a
-          <a>verifiable presentation</a> in a JWT, an extra set of steps
-          is required to convert the data to and from the JWT format. Such extra
-          conversion steps are not required for <a>verifiable credentials</a> and
-          <a>verifiable presentations</a> protected by LD-Proofs.
-                </dd>
-                <dt id="pf19">
-          PF19: Canonicalization does not require more than base-64 encoding.
-                </dt>
-                <dd>
-          JWTs use a simple base-64 encoding to generate the cryptographic hash of 
-          the data. LD-Proofs require a more complex canonicalization algorithm to 
-          generate the cryptographic hash. The JWT approach simplifies implementation 
-          but reduces encoding flexibility. The LD-Proof approach increases encoding 
-          flexibility but complicates implementation.
-        </dd>
-      </dl>
     </section>
 
     <section class="informative">
@@ -632,7 +191,12 @@ or send them to
       <em>This section is non-normative.</em>
 
       <p>
-TBD
+<a>Verification</a> is the process a <a>verifier</a> or <a>holder</a> performs
+when presented with a <a>verifiable presentation</a> or
+<a>verifiable credential</a>. <a>Verification</a> includes checking the
+presented item against the <a href="https://www.w3.org/TR/vc-data-model/">core
+data model</a>, and may also include validating the provided proof section and
+checking the item's status.
       </p>
 
       <section>
@@ -652,46 +216,75 @@ There are many data verification languages, the following approach is one
 that should work for most use cases.
         </p>
       </section>
-
       <section>
-        <h3>Disputes</h3>
-
+        <h3>Content Integrity</h3>
         <p>
-  There are at least two different cases to consider where an <a>entity</a>
-  wants to dispute a <a>credential</a> issued by an <a>issuer</a>:
+Protecting the integrity of content is an important component of verification.
+<a>Verifiers</a> need to have confidence that the content they rely on to
+verify <a>credentials</a> doesn't change without their knowledge. This content
+may include data schemas, identifiers, public keys, etc.
         </p>
-
-        <ul>
-          <li>
-  A <a>subject</a> disputes a claim made by the <a>issuer</a>. For example, the
-  <code>address</code> <a>property</a> is incorrect or out of date.
-          </li>
-          <li>
-  An <a>entity</a> disputes a potentially false claim made by the <a>issuer</a>
-  about a different <a>subject</a>. For example, an imposter claims the social
-  security number for an <a>entity</a>.
-          </li>
-        </ul>
-
         <p>
-  The mechanism for issuing a <code>DisputeCredential</code> is the same as
-  for a regular <a>credential</a>, except that the <code>credentialSubject</code>
-  identifier in the <code>DisputeCredential</code> property is the identifier of
-  the disputed <a>credential</a>.
+There are a number of ways to provide content integrity protection. A few of
+these are described in greater detail below.
         </p>
+        <section>
+          <h4>Hashlinks</h4>
 
-        <p>
-  For example, if a <a>credential</a> with an identifier of
-  <code>https://example.org/credentials/245</code> is disputed, an <a>entity</a>
-  can issue one of the <a>credentials</a> shown below. In the first example, the
-  <a>subject</a> might present this to the <a>verifier</a> along with the disputed
-  <a>credential</a>. In the second example, the <a>entity</a> might publish the
-  <code>DisputeCredential</code> in a public venue to make it known that the
-  <a>credential</a> is disputed.
-        </p>
+          <p>
+<a href="https://tools.ietf.org/html/draft-sporny-hashlink-00">Hashlink URLs</a>
+can be used to provide content integrity for links to external resources.
+          </p>
+        </section>
+        <section>
+          <h4>Verifiable Data Registries</h4>
+          <p>
+A <a>verifiable data registry</a> can also provide content integrity protection.
+One example of a <a>verifiable data registry</a> which provides content
+integrity protection is a distributed ledger.
+          </p>
+        </section>
+      </section>
+    </section>
+    <section>
+      <h2>Disputes</h2>
 
-        <pre class="example nohighlight" title="A subject disputes a credential">
-  {
+      <p>
+There are at least two different cases to consider where an <a>entity</a>
+wants to dispute a <a>credential</a> issued by an <a>issuer</a>:
+      </p>
+
+      <ul>
+        <li>
+A <a>subject</a> disputes a claim made by the <a>issuer</a>. For example, the
+<code>address</code> <a>property</a> is incorrect or out of date.
+        </li>
+        <li>
+An <a>entity</a> disputes a potentially false claim made by the <a>issuer</a>
+about a different <a>subject</a>. For example, an imposter has claimed the
+social security number for an <a>entity</a>.
+        </li>
+      </ul>
+
+      <p>
+The mechanism for issuing a <code>DisputeCredential</code> is the same as
+for a regular <a>credential</a>, except that the <code>credentialSubject</code>
+identifier in the <code>DisputeCredential</code> property is the identifier of
+the disputed <a>credential</a>.
+      </p>
+
+      <p>
+For example, if a <a>credential</a> with an identifier of
+<code>https://example.org/credentials/245</code> is disputed, an <a>entity</a>
+can issue one of the <a>credentials</a> shown below. In the first example, the
+<a>subject</a> might present this to the <a>verifier</a> along with the disputed
+<a>credential</a>. In the second example, the <a>entity</a> might publish the
+<code>DisputeCredential</code> in a public venue to make it known that the
+<a>credential</a> is disputed.
+      </p>
+
+      <pre class="example nohighlight" title="A subject disputes a credential">
+{
   "@context": [
     "https://www.w3.org/2018/credentials/v1",
     "https://www.w3.org/2018/credentials/examples/v1"
@@ -708,13 +301,12 @@ that should work for most use cases.
   }</span>,
   "issuer": "https://example.com/people#me",
   "issuanceDate": "2017-12-05T14:27:42Z",
-  "proof": { ... }
-  }
-        </pre>
+  "proof": { <span class="comment">...</span> }
+}
+      </pre>
 
-
-        <pre class="example nohighlight" title="Another entity disputes a credential">
-  {
+      <pre class="example nohighlight" title="Another entity disputes a credential">
+{
   "@context": "https://w3id.org/credentials/v1",
   "id": "http://example.com/credentials/321",
   "type": ["VerifiableCredential", "DisputeCredential"],
@@ -732,23 +324,65 @@ that should work for most use cases.
   }</span>,
   "issuer": "https://example.com/people#me",
   "issuanceDate": "2017-12-05T14:27:42Z",
-  "proof": { ... }
+  "proof": { <span class="comment">...</span> }
+}
+      </pre>
+
+      <p>
+In the above <a>verifiable credential</a>, the <a>issuer</a> is claiming that
+the address in the disputed <a>verifiable credential</a> is wrong. For example,
+the <a>subject</a> might wrongly be claiming to have the same address as that of
+the <a>issuer</a>.
+      </p>
+      <p class="note">
+If a <a>credential</a> does not have an identifier, a content-addressed
+identifier can be used to identify the disputed <a>credential</a>. Similarly,
+content-addressed identifiers can be used to uniquely identify individual
+claims.
+      </p>
+    </section>
+
+    <section>
+      <h3>Presentations</h3>
+
+      <p>
+<a>Verifiable credentials</a> may be presented to a <a>verifier</a> by
+using a <a>verifiable presentation</a>. A <a>verifiable presentation</a> can
+be targeted to a specific <a>verifier</a> by using a Linked Data Proof
+that includes a <code>domain</code> and <code>challenge</code>. This also
+helps prevent a <a>verifier</a> from reusing a <a>verifiable presentation</a>
+as their own.
+      </p>
+
+      <p>
+The <code>domain</code> value can be any string or URI, and the
+<code>challenge</code> should be a randomly generated string.
+      </p>
+
+      <p>
+The following sample <a>verifiable presentation</a> is for authenticating to
+a website, <code>https://example.com</code>.
+      </p>
+
+      <pre class="example nohighlight" title="A targeted verifiable presentation">
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1"
+  ],
+  "type": "VerifiablePresentation,
+  "verifiableCredential": { <span class="comment">...</span> },
+  "proof": {
+    "type": "Ed25519Signature2018",
+    "created": "2019-08-13T15:09:00Z",
+    <span class="highlight">"challenge": "d1b23d3...3d23d32d2",
+    "domain": "https://example.com",</span>
+    "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..uyW7Hv
+      VOZ8QCpLJ63wHode0OdgWjsHfJ0O8d8Kfs55dMVEg3C1Z0bYUGV49s8IlTbi3eXsNvM63n
+      vah79E-lAg",
+    "proofPurpose": "authentication"
   }
-        </pre>
-
-  <p> In the above <a>verifiable credential</a>, the <a>issuer</a> is claiming that
-  the address in the disputed <a>verifiable credential</a> is wrong. For example,
-  the <a>subject</a> might wrongly be claiming to have the same address as that of
-  the <a>issuer</a>.
-  </p>
-        <p class="note">
-  If a <a>credential</a> does not have an identifier, a content-addressed
-  identifier can be used to identify the disputed <a>credential</a>. Similarly,
-  content-addressed identifiers can be used to uniquely identify individual
-  claims.
-        </p>
-
-      </section>
+}
+      </pre>
 
     </section>
 
@@ -758,26 +392,361 @@ that should work for most use cases.
       <em>This section is non-normative.</em>
 
       <p>
-TBD
+The Verifiable Credentials Data Model is designed around an <em>open world
+assumption</em>, meaning that any entity can say anything about another entity.
+This approach enables permissionless innovation; there is no centralized
+registry or authority through which an extension author must register
+themselves nor the specific data models and vocabularies they create.
+      </p>
+
+      <p>
+Instead, credential data model authors are expected to use machine-readable
+vocabularies through the use of [LINKED-DATA]. This implementation guide
+provides examples for how to express data models using a data format that
+is popular with software developers and web page authors called [JSON-LD]. This
+data format provides features that enable authors to express their data models
+in idiomatic JSON while also ensuring that their vocabulary terms are
+unambigiously understood, even by software that does not implement
+JSON-LD processing.
+      </p>
+
+      <p>
+The Verifiable Credentials data model also uses a graph-based data model,
+which allows authors to model both simple relationships that describe
+one or more attributes for a single entity and complex multi-entity
+relationships.
+      </p>
+
+      <p>
+The rest of this section describes how to author extensions that build on
+the Verifiable Credentials Data Model.
       </p>
 
       <section>
         <h3>Creating New Credential Types</h3>
 
-        <ul>
+        <p>
+We expect the most common extensions to the Verifiable Credentials Data Model
+to be new credential types. Whenever someone has something to say about one or
+more entities and they want their authorship to be verifiable, they should use
+a Verifiable Credential. Sometimes there may be an existing credential type,
+that someone else has created, that can be reused to make the statements they
+want to make. However, there are often cases where new credential types are
+needed.
+        </p>
+
+        <p>
+New credential types can be created by following a few steps. This guide will
+also walk you through creating an example new credential type. At a high level,
+the steps to follow are:
+        </p>
+
+        <ol>
           <li>
-Design the Data Model.
+Design the data model.
           </li>
           <li>
-Create the JSON-LD Context.
+Create a new JSON-LD context.
           </li>
           <li>
 Select a publishing location.
           </li>
           <li>
-Use the new JSON-LD Context.
+Use the new JSON-LD context when issuing new credentials.
           </li>
-        </ul>
+        </ol>
+
+        <p>
+So, let's walk through creating a new credential type which we will
+call <code>ExampleAddressCredential</code>. The purpose of this credential
+will be to express a person's postal address.
+        </p>
+
+        <h4>Design the data model</h4>
+
+        <p>
+First, we must design a data model for our new credential type. We know that
+we will need to be able to express the basics of a postal address, things
+like a person's city, state, and zipcode. Of course, those items are quite
+US centric, so we should consider internationalizing those terms. But before
+we go further, since we're using [LINKED-DATA] vocabularies, there is a good
+chance that commonly known concepts may already have a vocabulary that someone
+else has created that we can leverage.
+        </p>
+
+        <p>
+If we are going to use someone else's vocabulary, we will want to make sure it
+is stable and unlikely to change in any significant way. There may even be
+technologies that we can make use of that store immutable vocabularies that
+we can reference, but those are not the focus of this example. Here we will
+rely on the inertia that comes from a very popularly used vocabulary on the
+Web, schema.org. It turns out that this vocabulary has just what we need; it
+has already modeled a postal address and even has examples for how to express
+it using JSON-LD.
+        </p>
+
+        <p>
+Using the schema.org vocabulary and JSON-LD we can express a person's address
+like so:
+        </p>
+
+        <pre class="example nohighlight" title="Example schema.org address">
+          {
+            <span class="highlight">
+            "@context": [
+              "http://schema.org"
+            ]</span>,
+            "type": "Person",
+            "address": {
+              "type": "PostalAddress",
+              "streetAddress": "123 Main St."
+              "addressLocality": "Blacksburg",
+              "addressRegion": "VA",
+              "postalCode": "24060",
+              "addressCountry": "US"
+            }
+          }
+        </pre>
+
+        <p>
+Note the above <code>@context</code> key in the JSON. This <code>@context</code>
+refers to a machine-readable file (also expressed in JSON) that provides
+term definitions [JSON-LD]. A term definition maps a key or type used in the
+JSON, such as <code>address</code> or <code>PostalAddress</code>, to a globally
+unique identifier: a URL.
+        </p>
+
+        <p>
+This ensures that when software sees the <code>@context</code>
+<em>http://schema.org</em>, that it will interpret the the keys and types in the
+JSON in a globally consistent way, without requiring developers to use full URLs
+in the JSON or in the code that may traverse it. As long as the software is
+aware of the specific <code>@context</code> used (or if it uses JSON-LD
+processing to transform it to some other known <code>@context</code>), then it
+will understand the <em>context</em> in which the JSON was written and meant to
+be understood. The use of <code>@context</code> also allows [JSON-LD] keywords
+such as <code>@type</code> to be aliased to the simpler <code>type</code> as
+is done in the above example.
+        </p>
+
+        <p>
+Note that we could also express the JSON using full URLs, if we want to avoid
+using <em>@context</em>. Here is what the example would look like if we did
+that:
+        </p>
+
+        <pre class="example nohighlight" title="Example schema.org address with full URLs">
+          {
+            "@type": "http://schema.org/Person",
+            "http://schema.org/address": {
+              "@type": "http://schema.org/PostalAddress",
+              "http://schema.org/streetAddress": "123 Main St."
+              "http://schema.org/addressLocality": "Blacksburg",
+              "http://schema.org/addressRegion": "VA",
+              "http://schema.org/postalCode": "24060",
+              "http://schema.org/addressCountry": "US"
+            }
+          }
+        </pre>
+
+        <p>
+While this form is an acceptable way to express the information such that it is
+unambiguous, many software developers would prefer to use more idiomatic JSON.
+The use of <code>@context</code> enables idiomatic JSON without losing global
+consistency and without the need for a centralized registry or authority for
+creating extensions. Note that <code>@context</code> can also have more than
+one value. In this case, a JSON array is used to express multiple values, where
+each value references another context that defines terms. Using this mechanism
+we can first bring in the terms defined in the Verifiable Credentials Data Model
+specification and then bring in the terms defined by schema.org:
+        </p>
+
+        <pre class="example nohighlight" title="Example address credential with schema.org context">
+          {
+            <span class="highlight">
+            "@context": [
+              "https://www.w3.org/2018/credentials/v1",
+              "http://schema.org"
+            ]</span>,
+            <span class="comment">...</span>
+            "credentialSubject": {
+              "type": "Person",
+              "address": {
+                "type": "PostalAddress",
+                "streetAddress": "123 Main St."
+                "addressLocality": "Blacksburg",
+                "addressRegion": "VA",
+                "postalCode": "24060",
+                "addressCountry": "US"
+              }
+            },
+            <span class="comment">...</span>
+          }
+        </pre>
+
+        <p>
+Note, however, that each <em>context</em> might have a different definition for
+the same term, e.g., the JSON key <code>address</code> might map to a different
+URL in each <em>context</em>. By default, [JSON-LD] allows terms in a
+<code>@context</code> to be redefined using a <em>last term wins</em>
+order. While these changes can be safely dealt with by using JSON-LD
+processing, we want to lower the burden on consumers of Verifiable Credentials.
+We want consumer software to be able to make assumptions about the meaning of
+terms by only having to read and understand the string value associated with
+the <code>@context</code> key. We don't want them to have to worry about terms
+being redefined in unexpected ways. That way their software can inspect only
+the <code>@context</code> values and then be hard coded to understand the
+meaning of the terms.
+        </p>
+
+        <p>
+In order to prevent term redefinition, the [JSON-LD] <code>@protected</code>
+feature must be applied to term definitions in the <code>@context</code>. All
+terms in the core Verifiable Credentials <code>@context</code> are
+already protected in this way. The only time that an existing term is allowed
+to be redefined is if the new definition is scoped underneath another new term
+that is defined in a <em>context</em>. This matches developer expectations and
+ensures that consumer software has strong guarantees about the semantics of the
+data it is processing; it can be written such that it is never confused about
+the definition of a term. Note that consumers must determine their own risk
+profile for how to handle any credentials their software processes that include
+terms that it does not understand.
+        </p>
+
+        <h4>Create a new JSON-LD context</h4>
+
+        <p>
+Given the above, there is at least one reason why we don't want to use
+the schema.org <em>context</em>: it is designed to be very flexible and thus
+does not use the <code>@protected</code> feature. There are a few additional
+reasons we want to create our own [JSON-LD] context though. First, the
+schema.org context does not define our new credential type:
+<em>ExampleAddressCredential</em>. Second, it is not served via a secure
+protocol (e.g., <em>https</em>); rather, it uses <em>http</em>. Note that this
+is less of a concern than it may seem, as it is recommended that all Verifiable
+Credential consumer software hard code the <code>@context</code> values it
+understands and not reach out to the Web to fetch them. Lastly, it is a very
+large context, containing many more term definitions than are necessary for our
+purposes.
+        </p>
+
+        <p>
+So, we will create our own [JSON-LD] context that expresses just those term
+definitions that we need for our new credential type. Note that this does not
+mean that we must mint new URLs; we can still reuse the schema.org vocabulary
+terms. All we are doing is creating a more concise and targeted context. Here's
+what we'll need in our context:
+        </p>
+
+        <pre class="example nohighlight" title="Example address credential context">
+          {
+            "@version": 1.1,
+            "@protected": true,
+
+            "ExampleAddressCredential":
+              "https://example.org/ExampleAddressCredential",
+
+            "Person": {
+              "@id": "http://schema.org/Person",
+              "@context": {
+                "@version": 1.1,
+                "@protected": true,
+
+                "address": "http://schema.org/address"
+              }
+            },
+            "PostalAddress": {
+              "@id": "http://schema.org/PostalAddress",
+              "@context": {
+                "@version": 1.1,
+                "@protected": true,
+
+                "streetAddress": "http://schema.org/streetAddress",
+                "addressLocality": "http://schema.org/addressLocality",
+                "addressRegion": "http://schema.org/addressRegion",
+                "postalCode": "http://schema.org/postalCode",
+                "addressCountry": "http://schema.org/addressCountry"
+              }
+            }
+          }
+        </pre>
+
+        <p>
+The above context defines a term for our new credential type
+<em>ExampleAddressCredential</em>, mapping it to the URL
+<em>https://example.org/ExampleAddressCredential</em>. We could have also
+chosen a URI like <em>urn:private-example:ExampleAddressCredential</em>, but
+this approach would not allow us to serve up a Web page to describe it, if we
+so desire. The context also defines the terms for types <em>Person</em> and
+<em>PostalAddress</em>, mapping them to their schema.org vocabulary URLs.
+Furthermore, when those types are used, it also defines protected terms for
+each of them via a <em>scoped context</em>, mapping terms like <em>address</em>
+and <em>streetAddress</em> to their schema.org vocabulary URLs. For more
+information on how to write a JSON-LD context or <em>scoped contexts</em>, see
+the [JSON-LD] specification.
+        </p>
+
+        <h4>Select a publishing location</h4>
+
+        <p>
+Now that we have a [JSON-LD] context, we must give it a URL. Technically
+speaking, we could just use a URI, for example, a private URN such as
+<em>urn:private-example:my-extension</em>. However, if we want people to be
+able to read and discover it on the Web, we should give it a URL like
+<em>https://example.org/example-address-credential-context/v1</em>.
+        </p>
+
+        <p>
+When this URL is dereferenced, it should return
+<em>application/ld+json</em> by default, to allow JSON-LD processors to process
+the context. However, if a user agent requests <em>HTML</em>, it should return
+human readable text that explains, to humans, what the term definitions are and
+what they map to. Since we're reusing an existing vocabulary, schema.org, we
+can also simply link to the definitions of the meaning of our types and terms
+via their website. If we had created our own new vocabulary terms, we would
+describe them on our own site, ideally including machine readable Information
+as well.
+        </p>
+
+        <h4>Use the new JSON-LD context when issuing new credentials</h4>
+
+        <p>
+Now we're ready for our context to be used by anyone who
+wishes to issue an <em>ExampleAddressCredential</em>!
+        </p>
+
+        <pre class="example nohighlight" title="Example address credential with schema.org context">
+          {
+            <span class="highlight">
+            "@context": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://example.org/example-address-credential-context/v1"
+            ]</span>,
+            "id": "https://example.org/credentials/1234",
+            "type": "ExampleAddressCredential",
+            "issuer": "https://example.org/people#me",
+            "issuanceDate": "2017-12-05T14:27:42Z",
+            "credentialSubject": {
+              "id": "did:example:1234",
+              "type": "Person",
+              "address": {
+                "type": "PostalAddress",
+                "streetAddress": "123 Main St."
+                "addressLocality": "Blacksburg",
+                "addressRegion": "VA",
+                "postalCode": "24060",
+                "addressCountry": "US"
+              }
+            },
+            "proof": { <span class="comment">...</span> }
+          }
+        </pre>
+
+        <p>
+Note that writing this new credential type requires permission from no one,
+you must only adhere to the above referenced standards.
+        </p>
+
       </section>
 
       <section>
@@ -796,7 +765,7 @@ applications:
               "https://www.w3.org/2018/credentials/examples/v1"
             ]</span>,
             "id": "http://example.edu/credentials/1872",
-            ...
+            <span class="comment">...</span>
         </pre>
 
         <p>
@@ -817,233 +786,504 @@ and examples of typical usage of the extension.
     </section>
 
     <section>
-      <h2>Cryptography</h2>
-
+      <h2>Proof Formats</h2>
       <em>This section is non-normative.</em>
 
       <p>
+The <a>verifiable credentials</a>
+<a href="https://w3c.github.io/vc-data-model/">data model </a> is designed to be
+proof format agnostic. <a href="https://w3c.github.io/vc-data-model/">The
+specification</a> does not normatively require any particular digital proof or
+signature format. While the data model is the canonical representation of a
+<a>verifiable credential</a> or <a>verifiable presentation</a>, the proving
+mechanisms for these are often tied to the syntax used in the transmission of
+the document between parties. As such, each proofing mechanism has to specify
+whether the validation of the proof is calculated against the state of the
+document as transmitted, against the transformed data model, or against another
+form. At the time of publication, at least two proof formats are being actively
+utilized by implementers, and the Working Group felt that documenting what these
+proof formats are and how they are being used would be beneficial to other
+implementers.
       </p>
+      <p>
+This guide provides tables in section <a href="#pf1b">Benefits of JWTs</a> and
+section <a href="#pf1b">Benefits of JSON-LD and LD-Proofs</a> that compare three
+syntax and proof format ecosystems; JSON+JWTs, JSON-LD+JWTs, and
+JSON-LD+LD-Proofs.
+      </p>
+      <p>
+Because the Verifiable Credentials Data Model is extensible, and agnostic to any
+particular proof format, the specification and use of additional proof formats
+is supported.
+      </p>
+        <section>
+            <h3>Benefits of JWTs</h3>
 
-      <section>
-        <h2>Benefits of JWTs</h2>
-
-        <p class="note">
-This section will explain the benefits of using only JSON and JWTs as well as
-JSON-LD and JWTs.
-        </p>
-
-      </section>
-
-      <section>
-        <h2>Benefits of JSON-LD and LD-Proofs</h2>
-
-        <p>
+            <p>
 The Verifiable Credentials Data Model is designed to be compatible with a
 variety of existing and emerging syntaxes and digital proof formats. Each
 approach has benefits and drawbacks. The following table is intended to
 summarize a number of these native trade-offs.
-        </p>
+            </p>
 
-        <p>
+            <p>
+The table below compares three syntax and proof format ecosystems; JSON+JWTs,
+JSON-LD+JWTs, and JSON-LD+LD-Proofs.
+            </p>
+
+            <table class="simple" id="#pfatable">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">Feature</th>
+                    <th style="text-align: center;">JSON<br>+<br>JWTs</th>
+                    <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
+                    <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>
+<a href="#pf1a">PF1a.</a> Proof format supports Zero-Knowledge Proofs.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf2a">PF2a.</a> Proof format supports arbitrary proofs such as Proof
+of Work, Timestamp Proofs, and Proof of Stake.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf3a">PF3a.</a> Based on existing official standards.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf4a">PF4a.</a> Designed to be small in size.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf5a">PF5a.</a> Offline support without further processing.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf6a">PF6a.</a> Wide adoption in other existing standards.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf7a">PF7a.</a> No type ambiguity.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf8a">PF8a.</a> Broad library support.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf9a">PF9a.</a> Easy to understand what is signed.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf10a">PF10a.</a> Ability to be used as authn/authz token with existing systems.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf11a">PF11a.</a> No additional canonicalization required.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf12a">PF12a.</a> No Internet PKI required.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+                <tr>
+                    <td>
+<a href="#pf13a">PF13a.</a> No resolution of external documents needed.
+                    </td>
+                    <td class="supported">✓</td>
+                    <td class="missing">✖</td>
+                    <td class="missing">✖</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+            <p class="note">
+Some of the features listed in the table above are debateable, since a feature
+can always be added to a particular syntax or digital proof format. The table
+is intended to identify native features of each combination such that no
+additional language design or extension is required to achieve the identified
+feature. Features that all languages provide, such as the ability to express
+numbers, have not been included for the purposes of brevity. Find more information
+about different proof formats in the next section.
+            </p>
+
+            <dl>
+              <dt id="pf1a">
+PF1a: Proof format supports Zero-Knowledge Proofs.
+              </dt>
+                <dd>
+JWTs can embed `proof` attributes for repudiable proofs such as Zero-Knowledge Proofs.
+In that case, the JWS will not have an signature element.
+                </dd>
+                <dt id="pf2a">
+PF2a: Proof format supports arbitrary proofs such as Proof of Work, Timestamp
+Proofs, and Proof of Stake.
+                </dt>
+                <dd>
+JWTs can embed `proof` attributes for any type of proofs such as Proof of Work, Timestamp,
+Proofs, and Proof Stake.
+                </dd>
+                <dt id="pf3a">
+PF3a: Based on existing official standards.
+                </dt>
+                <dd>
+JSON and JWT are proposed and mature IETF standards. While JSON-LD 1.0 is in
+REC state in W3C, JSON-LD 1.1 is still in WD state. LD-Proofs are not standardized at all.
+                </dd>
+                <dt id="pf4a">
+PF4a: Designed to be small in size.
+                </dt>
+                <dd>
+JSON was invented as a simple data format to be transmitted on the wire. A verifiable credential
+can be expressed by its attributes only, without the necessity to introduce additional meta-information
+such as @context. This makes the resulting JSON+JWT credential typically also smaller in size.
+                </dd>
+                <dt id="pf5a">
+PF5a: Offline support without further processing.
+                </dt>
+                <dd>
+A JWT can fully describe itself without the need to retrieve or verify any external documents.
+JSON-LD requires the context to be queryable and requires further documents to be accessible
+to check the prevalent document, e.g., LD-Proof. Additional caching needs to be implemented
+to support offline use cases.
+                </dd>
+                <dt id="pf6a">
+PF6a: Wide adoption in other existing standards.
+                </dt>
+                <dd>
+JWT founds its application in many other existing standards, e.g., OAuth2, OpenID Connect.
+This allows for backward compatibility with existing authentication and authorization
+frameworks without or with only minor modifications to these legacy systems.
+                </dd>
+                <dt id="pf7a">
+PF7a: No type ambiguity.
+                </dt>
+                <dd>
+It is best practice that JSON data structures typically do not expect changing types of
+their internal attributes. JSON-LD has implicit support for compact form serialization
+which transforms arrays with a single element only to switch its data type. Developers
+writing parsers have to implement special handling of these data types, which results in
+more code, is more error-prone and sometimes does not allow parsers based on code
+generation, which rely on static types.
+                </dd>
+                <dt id="pf8a">
+PF8a: Broad library support.
+                </dt>
+                <dd>
+JWT and JSON due to its maturity and standardization, have a lot of open-source library
+support. While JSON-LD 1.0 is a standard and has support for different programming
+languages, it is still behind JSON which is often part of the native platform
+toolchain, e.g., JavaScript. For LD-Proofs, on the other hand, only a few scattered
+libraries exist.
+                </dd>
+                <dt id="pf9a">
+PF9a: Easy to understand what is signed.
+                </dt>
+                <dd>
+JWT makes it visible what is signed in contrast to LD-Proofs, e.g., LD Signatures, that
+are detached from the actual payload and contain links to external documents which makes
+it not obvious for a developer to figure out what is part of the signature.
+                </dd>
+                <dt id="pf10a">
+PF10a: Ability to be used as authn/authz token with existing systems.
+                </dt>
+                <dd>
+Many existing applications rely on JWT for authentication and authorization purposes.
+In theory, developers maintaining these applications could leverage JWT-based verifiable
+presentations in their current systems with minor or no modifications. LD-Proofs represents
+a new approach which would require more work to achieve the same result.
+                </dd>
+                <dt id="pf11a">
+PF11a: No additional canonicalization required.
+                </dt>
+                <dd>
+Beyond base64 URL encoding JSON and JWT don't require any canonicalization to be transmitted
+on the wire. The JWS can be calculated on any data inside of the payload. This results in less
+computation, less complexity, and light-weight libraries compared to JSON-LD and LD-Proofs where
+canonicalization is required.
+                </dd>
+                <dt id="pf12a">
+PF12a: No Internet PKI required.
+                </dt>
+                <dd>
+JSON-LD and LD-Proofs rely on resolving external documents, e.g., <code>@context</code>. This means that
+a verifiable credential system would rely on existing Internet PKI to a certain extend and
+cannot be fully decentralized. A JWT-based system does not need to introduce this dependency.
+                </dd>
+                <dt id="pf13a">
+PF13a: No resolution of external documents needed.
+                </dt>
+                <dd>
+JSON-LD and LD-Proofs require the resolution of external documents, which leads to an
+increased network load for the verifier of a verifiable presentation. This needs to be
+mitigated through caching strategies.
+                </dd>
+            </dl>
+        </section>
+        <section>
+          <h3>Benefits of JSON-LD and LD-Proofs</h3>
+
+          <p>
+The Verifiable Credentials Data Model is designed to be compatible with a
+variety of existing and emerging syntaxes and digital proof formats. Each
+approach has benefits and drawbacks. The following table is intended to
+summarize a number of these native trade-offs.
+          </p>
+
+          <p>
 The table below compares three syntax and proof format ecosystems; JSON+JWTs,
 JSON-LD+JWTs, and JSON-LD+LD-Proofs. Readers should be aware that
 Zero-Knowledge Proofs are currently proposed as a sub-type of LD-Proofs and
 thus fall into the final column below.
-        </p>
+          </p>
 
-        <table class="simple">
-          <thead>
-            <tr>
-              <th style="text-align: center;">Feature</th>
-              <th style="text-align: center;">JSON<br>+<br>JWTs</th>
-              <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
-              <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
-            </tr>
-          </thead>
+          <table class="simple" id="#pfbtable">
+            <thead>
+              <tr>
+                <th style="text-align: center;">Feature</th>
+                <th style="text-align: center;">JSON<br>+<br>JWTs</th>
+                <th style="text-align: center;">JSON&#8209;LD<br>+<br>JWTs</th>
+                <th style="text-align: center;">JSON&#8209;LD<br>+<br>LD&#8209;Proofs</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            <tr>
-              <td>
-<a href="#pf1">PF1.</a> Support for open world data modelling.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf2">PF2.</a> Universal identifier mechanism for JSON objects via
+            <tbody>
+              <tr>
+                <td>
+<a href="#pf1b">PF1b.</a> Support for open world data modelling.
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf2b">PF2b.</a> Universal identifier mechanism for JSON objects via
 the use of URIs.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf3">PF3.</a> A way to disambiguate properties shared among different
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf3b">PF3b.</a> A way to disambiguate properties shared among different
 JSON documents by mapping them to IRIs via a context.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf4">PF4.</a> A mechanism to refer to data in an external document,
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf4b">PF4b.</a> A mechanism to refer to data in an external document,
 where the data may be merged with the local document without a merge conflict
 in semantics or structure.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf5">PF5.</a> The ability to annotate strings with their language.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf6">PF6.</a> A way to associate arbitrary datatypes, such as dates
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf5b">PF5b.</a> The ability to annotate strings with their language.
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf6b">PF6b.</a> A way to associate arbitrary datatypes, such as dates
 and times, with arbitrary property values.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf7">PF7.</a> A facility to express one or more directed graphs,
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf7b">PF7b.</a> A facility to express one or more directed graphs,
 such as a social network, in a single document.
-              </td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf8">PF8.</a> Supports signature sets.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf9">PF9.</a> Embeddable in HTML such that search crawlers will
+                </td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf8b">PF8b.</a> Supports signature sets.
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf9b">PF9b.</a> Embeddable in HTML such that search crawlers will
 index the machine-readable content.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf10">PF10.</a> Data on the wire is easy to debug and serialize to
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf10b">PF10b.</a> Data on the wire is easy to debug and serialize to
 database systems.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf11">PF11.</a> Nesting signed data does not cause data size to
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf11b">PF11b.</a> Nesting signed data does not cause data size to
 double for every embedding.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf12">PF12.</a> Proof format supports Zero-Knowledge Proofs.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf13">PF13.</a> Proof format supports arbitrary proofs such as Proof
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf12b">PF12b.</a> Proof format supports Zero-Knowledge Proofs.
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf13b">PF13b.</a> Proof format supports arbitrary proofs such as Proof
 of Work, Timestamp Proofs, and Proof of Stake.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf14">PF14.</a> Proofs can be expressed unmodified in other data
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf14b">PF14b.</a> Proofs can be expressed unmodified in other data
 syntaxes such as YAML, N-Quads, and CBOR.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf15">PF15.</a> Changing property-value ordering, or introducing
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf15b">PF15b.</a> Changing property-value ordering, or introducing
 whitespace does not invalidate signature.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf16">PF16.</a> Designed to easily support experimental signature
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf16b">PF16b.</a> Designed to easily support experimental signature
 systems.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf17">PF17.</a> Supports signature chaining.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf18">PF18.</a> Does not require pre-processing or post-processing.
-              </td>
-              <td class="missing">✖</td>
-              <td class="missing">✖</td>
-              <td class="supported">✓</td>
-            </tr>
-            <tr>
-              <td>
-<a href="#pf19">PF19.</a> Canonicalization requires more than base-64 encoding.
-              </td>
-              <td class="supported">✓</td>
-              <td class="supported">✓</td>
-              <td class="missing">✖</td>
-            </tr>
-          </tbody>
-        </table>
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf17b">PF17b.</a> Supports signature chaining.
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf18b">PF18b.</a> Does not require pre-processing or post-processing.
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+              <tr>
+                <td>
+<a href="#pf19b">PF19b.</a> Canonicalization requires only base-64 encoding.
+                </td>
+                <td class="missing">✖</td>
+                <td class="missing">✖</td>
+                <td class="supported">✓</td>
+              </tr>
+            </tbody>
+          </table>
 
-        <p class="note">
+          <p class="note">
 Some of the features listed in the table above are debateable, since a feature
 can always be added to a particular syntax or digital proof format. The table
 is intended to identify native features of each combination such that no
 additional language design or extension is required to achieve the identified
 feature. Features that all languages provide, such as the ability to express
 numbers, have not been included for the purposes of brevity.
-        </p>
+          </p>
 
-        <dl>
-          <dt id="pf1">
-PF1: Support for open world data modelling
-          </dt>
-          <dd>
+          <dl>
+            <dt id="pf1b">
+PF1b: Support for open world data modelling
+            </dt>
+            <dd>
 An <em>open world data model</em> is one where any entity can make any
 statement about anything while simultaneously ensuring that the semantics of
 the statement are unambiguous. This specification is enabled by an open world
@@ -1051,22 +1291,22 @@ data model called Linked Data. One defining characteristic of supporting an open
 world data model is the ability to specify the semantic context in which data
 is being expressed. JSON-LD provides this mechanism via the
 <code>@context</code> property. JSON has no such feature.
-          </dd>
-          <dt id="pf2">
-PF2: Universal identifier mechanism for JSON objects via the use of URIs.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf2b">
+PF2b: Universal identifier mechanism for JSON objects via the use of URIs.
+            </dt>
+            <dd>
 All entities in a JSON-LD document are identified either via an automatic URI,
 or via an explicit URI. This enables all entities in a document to be
 unambiguously referenced. JSON does not have a native URI type nor does it
 require objects to have one, making it difficult to impossible to unambiguously
 identify an entity expressed in JSON.
-          </dd>
-          <dt id="pf3">
-PF3: A way to disambiguate properties shared among different JSON documents by
+            </dd>
+            <dt id="pf3b">
+PF3b: A way to disambiguate properties shared among different JSON documents by
 mapping them to IRIs via a context.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 All object properties in a JSON-LD document, such as the property "homepage",
 are either keywords or they are mapped to an IRI. This feature enables open
 world systems to identify the semantic meaning of the property in an unambiguous
@@ -1075,13 +1315,13 @@ JSON object properties are not mapped to IRIs, which result in ambiguities with
 respect to the semantic meaning of the property. For example, one JSON document
 might use "title" (meaning "book title") in a way that is semantically
 incompatible with another JSON document using "title" (meaning "job title").
-          </dd>
-          <dt id="pf4">
-PF4: A mechanism to refer to data in an external document, where the data may
+            </dd>
+            <dt id="pf4b">
+PF4b: A mechanism to refer to data in an external document, where the data may
 be merged with the local document without a merge conflict in semantics or
 structure.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 JSON-LD provides a mechanism that enables a data value to use a URL to refer
 to data outside of the local document. This external data may then be
 automatically merged with the local document without a merge conflict in
@@ -1091,61 +1331,61 @@ associated with the local document. While a JSON document can contain pointers
 to external data, interpreting the pointer is often application specific and
 usually does not support merging the external data to construct a richer data
 set.
-          </dd>
-          <dt id="pf5">
-PF5: The ability to annotate strings with their language.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf5b">
+PF5b: The ability to annotate strings with their language.
+            </dt>
+            <dd>
 JSON-LD enables a developer to specify the language, such as English, French,
 or Japanese, in which a text string is expressed via the use of language tags.
 JSON does not provide such a feature.
-          </dd>
-          <dt id="pf6">
-PF6: A way to associate arbitrary datatypes, such as dates
+            </dd>
+            <dt id="pf6b">
+PF6b: A way to associate arbitrary datatypes, such as dates
 and times, with arbitrary property values.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 JSON-LD enables a developer to specify the data type of a property value,
 such as Date, unsigned integer, or Temperature by specifying it in the
 JSON-LD Context. JSON does not provide such a feature.
-          </dd>
-          <dt id="pf7">
-PF7: A facility to express one or more directed graphs, such as a social
+            </dd>
+            <dt id="pf7b">
+PF7b: A facility to express one or more directed graphs, such as a social
 network, in a single document.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 JSON-LD's abstract data model supports the expression of information
 as a directed graph of labeled nodes and edges, which enables an open world
 data model to be supported. JSON's abstract data model only supports the
 expression of information as a tree of unlabeled nodes and edges, which
 restricts the types of relationships and structures that can be natively
 expressed in the language.
-          </dd>
-          <dt id="pf8">
-PF8: Supports signature sets.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf8b">
+PF8b: Supports signature sets.
+            </dt>
+            <dd>
 A signature set is an unordered set of signatures over a data payload. Use
 cases, such as cryptographic signatures applied to a legal contract,
 typically require more than one signature to be associated with the contract
 in order to legally bind two or more parties under the terms of the contract.
 Linked Data Proofs, including Linked Data Signatures, natively support sets of
 signatures. JWTs only enable a single signature over a single payload.
-          </dd>
-          <dt id="pf9">
-PF9: Embeddable in HTML such that search crawlers will index the
+            </dd>
+            <dt id="pf9b">
+PF9b: Embeddable in HTML such that search crawlers will index the
 machine-readable content.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 All major search crawlers natively parse and index information expressed as
 JSON-LD in HTML pages. LD-Proofs enable the current data format that search
 engines use to be extended to support digital signatures. JWTs have no mechanism
 to express data in HTML pages and are currently not indexed by search crawlers.
-          </dd>
-          <dt id="pf10">
-PF10: Data on the wire is easy to debug and serialize to database systems.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf10b">
+PF10b: Data on the wire is easy to debug and serialize to database systems.
+            </dt>
+            <dd>
 When developers are debugging software systems, it is beneficial for them to be
 able to see the data that they are operating on using common debugging tools.
 Similarly, it is useful to be able to serialize data from the network to a
@@ -1157,12 +1397,12 @@ complicated pre and post processing steps to convert the data into JSON data
 while not destroying the digital signature. Similarly, schema-less databases,
 which are typically used to index JSON data, cannot index information
 that is expressed in an opaque base-64 encoded wrapper.
-          </dd>
-          <dt id="pf11">
-PF11: Nesting signed data does not cause data size to double for every
+            </dd>
+            <dt id="pf11b">
+PF11b: Nesting signed data does not cause data size to double for every
 embedding.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 When a JWT is encapsulated by another JWT, the entire payload must be base-64
 encoded in the initial JWT, and then base-64 encoded again in the encapsulating
 JWT. This is often necessary when a cryptographic signature is required on a
@@ -1172,11 +1412,11 @@ services. LD-Proofs do not require base-64 encoding the signed portion of a
 document and instead rely on a canonicalization process that is just as
 secure, and that only requires the cryptographic signature to be encoded
 instead of the entire payload.
-          </dd>
-          <dt id="pf12">
-PF12: Proof format supports Zero-Knowledge Proofs.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf12b">
+PF12b: Proof format supports Zero-Knowledge Proofs.
+            </dt>
+            <dd>
 The LD-Proof format is capable of modifying the algorithm that generates
 the hash or hashes that are cryptographically signed. This cryptographic
 agility enables digital signature systems, such as Zero-Knowledge Proofs,
@@ -1184,12 +1424,12 @@ to be layered on top of LD-Proofs instead of an entirely new digital signature
 container format to be created. JWTs are designed such that an entirely new
 digital signature container format will be required to support Zero-Knowledge
 Proofs.
-          </dd>
-          <dt id="pf13">
-PF13: Proof format supports arbitrary proofs such as Proof of Work, Timestamp
+            </dd>
+            <dt id="pf13b">
+PF13b: Proof format supports arbitrary proofs such as Proof of Work, Timestamp
 Proofs, and Proof of Stake.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 The LD-Proof format was designed with a broader range of proof types in mind
 and supports cryptographic proofs beyond simple cryptographic signatures.
 These proof types are in common usage in systems such as decentralized ledgers
@@ -1198,24 +1438,24 @@ and provide additional guarantees to
 claim was made at a particular time or that a certain amount of energy was
 expended to generate a particular credential. The JWT format does not support
 arbitrary proof formats.
-          </dd>
-          <dt id="pf14">
-PF14: Proofs can be expressed unmodified in other data syntaxes such as XML,
+            </dd>
+            <dt id="pf14b">
+PF14b: Proofs can be expressed unmodified in other data syntaxes such as XML,
 YAML, N-Quads, and CBOR.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 The LD-Proof format utilizes a canonicalization algorithm to generate a
 cryptographic hash that is used as an input to the cryptographic proof
 algorithm. This enables the bytes generated as the cryptographic proof to be
 compact and expressible in a variety of other syntaxes such as XML,
 YAML, N-Quads, and CBOR. Since JWTs require the use of JSON to be generated,
 they are inextricably tied to the JSON syntax.
-          </dd>
-          <dt id="pf15">
-PF15: Changing property-value ordering, or introducing whitespace does not
+            </dd>
+            <dt id="pf15b">
+PF15b: Changing property-value ordering, or introducing whitespace does not
 invalidate signature.
-          </dt>
-          <dd>
+            </dt>
+            <dd>
 Since LD-Proofs utilize a canonicalization algorithm, the introduction of
 whitespace that does not change the meaning of the information being expressed
 has no effect on the final cryptographic hash over the information. This means
@@ -1226,11 +1466,11 @@ encode the payload using the base-64 format which is not resistant to
 whitespace formatting that has no effect on the information expressed. This
 shortcoming of JWTs make it challenging to, for example, express signed data in
 web pages that search crawlers index.
-          </dd>
-          <dt id="pf16">
-PF16: Designed to easily support experimental signature systems.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf16b">
+PF16b: Designed to easily support experimental signature systems.
+            </dt>
+            <dd>
 The LD-Proof format is naturally extensible, not requiring the format to be
 extended in a formal international standards working group in order to
 prevent namespace collisions. The JWT format requires entries in a centralized
@@ -1241,11 +1481,11 @@ suites that are guaranteed to not conflict with other LD-Proof
 extensions. This approach enables developers to easily experiment with new
 cryptographic signature mechanisms that support selective disclosure,
 zero-knowledge proofs, and post-quantum algorithms.
-          </dd>
-          <dt id="pf17">
-PF17: Supports signature chaining.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf17b">
+PF17b: Supports signature chaining.
+            </dt>
+            <dd>
 A signature chain is an ordered set of signatures over a data payload. Use
 cases, such as cryptographic signatures applied to a notarized document,
 typically require a signature by the signing party and then an additional one
@@ -1253,57 +1493,65 @@ by a notary to be made after the original signing party has made their
 signature. Linked Data Proofs, including Linked Data Signatures, natively
 support chains of signatures. JWTs only enable a single signature over a
 single payload.
-          </dd>
-          <dt id="pf18">
-PF18: Does not require pre-processing or post-processing.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf18b">
+PF18b: Does not require pre-processing or post-processing.
+            </dt>
+            <dd>
 In order to encode a <a>verifiable credential</a> or a
 <a>verifiable presentation</a> in a JWT, an extra set of steps
 are required to convert the data to and from the JWT format. No such extra
 converstion step are required for <a>verifiable credentials</a> and
 <a>verifiable presentations</a> protected by LD-Proofs.
-          </dd>
-          <dt id="pf19">
-PF19: Canonicalization requires more than base-64 encoding.
-          </dt>
-          <dd>
+            </dd>
+            <dt id="pf19b">
+PF19b: Canonicalization requires only base-64 encoding.
+            </dt>
+            <dd>
 The JWT format utilizes a simple base-64 encoding format to generate the
-cryptographic hash of the data. The encoding format for LD-Proofs require
+cryptographic hash of the data. The encoding format for LD-Proofs requires
 a more complex canonicalization algorithm to generate the cryptographic
 hash. The benefits of the JWT approach are simplicity at the cost of
 encoding flexibility. The benefits of the LD-Proof approach are flexibility at
 the cost of implementation complexity.
           </dd>
         </dl>
+
+      </section>
+
+    </section>
+
+    <section>
+      <h2>Zero-Knowledge Proofs</h2>
+      <em>This section is non-normative</em>
         <p>
 The Verifiable Credentials Data Model is designed to be compatible with a
 variety of existing and emerging digital proof formats. Each
-proof format has benefits and drawbacks. For instance, many proof formats
-cannot reveal selected attribute values in a verifiable credential;
-they can only reveal all (or none).
+proof format has benefits and drawbacks. Many proof formats cannot reveal
+only selected attribute values from a verifiable credential; they can only
+reveal all (or none).
         </p>
         <p>
 Zero-Knowledge Proofs (ZKPs) are a proof format that enables
-privacy-preserving and data-minimization features in
-verifiable presentations, such as selective disclosure and predicate proofs.
+privacy-preserving data-minimization features in <a>verifiable presentations</a>,
+such as selective disclosure and predicate proofs.
         </p>
         <p>
 Selective disclosure is the ability of a holder to reveal a subset of
 the attributes of a verifiable credential in a verifiable presentation.
 A presentation based on zero-knowledge proof mechanisms only contains
 those attributes and associated values that are required to satisfy
-the presentation requirements. 
+the presentation requirements.
         </p>
         <p>
 Zero-knowledge predicate proofs are a type of proof associated with
 an attribute. Predicate proofs include comparisons, such as
-"greater than", "less than", "not equal", "range", 
+"greater than", "less than", "not equal", "range",
 "set membership", and "set non-membership".
 Predicate proofs can be constructed without requiring the issuer
 to create special fields, such as
 "age-under-18", "age-over-21", or "age-over-60", in the verifiable credential
-at the time the credential was issued.
+at the time the credential is issued.
 For example, if a holder has a credential with a "birth-date" claim,
 the holder can create a predicate proof based on "birth-date" in the
 verifiable presentation. A predicate value derived from "birth-date" in
@@ -1316,54 +1564,9 @@ Verifiable credentials based on zero-knowledge proof mechanisms are
 also quantum-resistant after presentation.
         </p>
         <p>
-A drawback of zero-knowledge proof mechanisms is that they are
-more complex and larger than some older signature schemes.
+Drawbacks of zero-knowledge proof mechanisms include that they are more complex
+and may require larger proofs than some other proof mechanisms.
         </p>
-      </section>
-
-      <section>
-        <h3>Cryptographic Suites</h3>
-
-        <ul>
-          <li>
-            Design the Cryptographic Suite.
-          </li>
-          <li>
-            Create the JSON-LD Context.
-          </li>
-          <li>
-            Select a publishing location.
-          </li>
-          <li>
-            Implement the Cryptographic Suite and use it.
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>COSE Signature Expression</h3>
-
-        <p>
-          Use COSE to express signature values.
-        </p>
-      </section>
-
-      <section>
-        <h3>COSE Key Expression</h3>
-
-        <p>
-          Use COSE Web Keys to express key material.
-        </p>
-      </section>
-
-      <section>
-        <h3>Hashlinks</h3>
-
-        <p>
-          Hashlink URLs can be used to provide content integrity for links to 
-          external resources.
-        </p>
-      </section>
 
     </section>
 
@@ -1496,16 +1699,15 @@ also be useful reading for implementers looking to enable progressive trust.
       <em>This section is non-normative.</em>
 
       <p>
-        The W3C Verifiable Claims Working Group has produced a 
-        <a href="https://github.com/w3c/vc-test-suite/">test suite</a> in order 
+        The W3C Verifiable Claims Working Group has produced a
+        <a href="https://github.com/w3c/vc-test-suite/">test suite</a> in order
         for implementers to confirm their conformance with the current specifications.
       </p>
       <p>
-        You can review the <a href="https://w3c.github.io/vc-test-suite/implementations/">current 
+        You can review the <a href="https://w3c.github.io/vc-test-suite/implementations/">current
         draft implementation report</a>, which contains conformance testing results for submitted
         implementations supporting the Verifiable Credentials Data Model specification.
       </p>
     </section>
-  
   </body>
 </html>
